@@ -1,45 +1,45 @@
-import React from "react";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import Intro from "./components/intro/Intro.jsx";
-import Navbar from "./components/navbar/Navbar.jsx";
-import Hero from "./components/hero/Hero.jsx";
-import Footer from "./components/footer/Footer.jsx";
-import BottomCTAs from "./components/hero/BottomCTAs.jsx";
-import RightRail from "./components/hero/RightRail.jsx";
-import SocialRail from "./components/hero/SocialRail.jsx";
+import { React, useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Lenis from "lenis";
 
-function Layout() {
-  const location = useLocation();
+// Pages
+import Home from "./pages/home/Home.jsx";
+import FAQ from "./pages/FAQ.jsx";
 
-  return (
-    <div className="flex flex-col min-h-screen">
-      {/* Navbar */}
-      {location.pathname !== "/" && <Navbar />}
-
-      {/* Main content grows to fill space */}
-      <main className="flex-grow overflow-x-hidden">
-        <Routes>
-          <Route path="/" element={<Intro />} />
-          <Route path="/hero" element={<Hero />} />
-          {/* Add other routes here */}
-        </Routes>
-      </main>
-
-      {/* Footer */}
-      {location.pathname !== "/" && <Footer />}
-
-      {/* Floating overlays */}
-      {location.pathname !== "/" && <BottomCTAs />}
-      {location.pathname !== "/" && <RightRail />}
-      {location.pathname !== "/" && <SocialRail />}
-    </div>
-  );
-}
+import ClickSoundProvider from "./utils/ClickSoundProvider.jsx";
 
 export default function App() {
-  return (
-    <BrowserRouter>
-      <Layout />
-    </BrowserRouter>
-  );
+    // smooth scroll using lenis
+    useEffect(() => {
+        const lenis = new Lenis({
+            duration: 1.8,          // slower than before (was ~1.2)
+            smooth: true,
+            smoothTouch: true,
+        });
+
+        // expose globally so Navbar can call scrollTo
+        window.lenis = lenis;
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        return () => {
+            if (window.lenis === lenis) window.lenis = undefined;
+            lenis.destroy();
+        };
+    }, []);
+
+    return (
+        <BrowserRouter>
+            <ClickSoundProvider />
+            <Routes>
+                <Route path="/" element={<Home />} />
+                {/* keep any other routes you need */}
+                <Route path="/faq" element={<FAQ />} />
+            </Routes>
+        </BrowserRouter>
+    );
 }

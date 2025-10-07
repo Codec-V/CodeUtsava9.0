@@ -3,5 +3,11 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-    plugins: [react(), tailwindcss()]
+    plugins: [react(), tailwindcss()],
+    resolve: { dedupe: ['react', 'react-dom', 'react/jsx-runtime'] },
+    optimizeDeps: {
+        include: ['lenis'],        // helps Vite pre-bundle it
+    },
+    server: { allowedHosts: true },
+
 });
