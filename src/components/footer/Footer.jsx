@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import NIT from "../../assets/images/NIT.webp";
-import tcpName from "../../assets/images/tcpName.png";
-import codeutsava from "../../assets/images/codeutsava.png";
+import tcpName from "../../assets/1.png";
+import codeutsava from "../../assets/2.png";
 
 // Smooth scroll helper, uses Lenis if available
 function smoothScrollTo(targetSelector) {
@@ -35,18 +35,18 @@ const Footer = () => {
             {/* Top Section */}
             <div className="flex flex-col md:flex-row items-center justify-between gap-8">
                 {/* Logos */}
-                <div className="flex flex-col sm:flex-row items-center gap-6">
+                <div className="flex sm:flex-row md:flex-row items-center gap-6">
                     <img
                         src={codeutsava}
                         alt="CodeUtsava Logo"
                         loading="lazy"
-                        className="h-14 sm:h-16 object-contain drop-shadow-lg"
+                        className="h-24 sm:h-24 md:h-30 w:auto object-contain drop-shadow-lg"
                     />
                     <img
                         src={tcpName}
                         alt="TCP Logo"
                         loading="lazy"
-                        className="h-10 sm:h-12 object-contain drop-shadow-lg"
+                        className="h-18 sm:h-18 md:h-24 w:auto object-contain drop-shadow-lg"
                     />
                 </div>
 
@@ -117,11 +117,17 @@ const Footer = () => {
                     >
                         Home
                     </button>
-                    <Link
+                    {/* <Link
                         to="/events"
                         className="hover:text-pink-400 transition hover:drop-shadow-[0_0_6px_#ec4899]"
                     >
                         Events
+                    </Link> */}
+                    <Link
+                        to="/teams"
+                        className="hover:text-pink-400 transition hover:drop-shadow-[0_0_6px_#ec4899]"
+                    >
+                        TCP Team
                     </Link>
                     <Link
                         to="/speakers"
@@ -130,20 +136,18 @@ const Footer = () => {
                         Speakers
                     </Link>
                     <button
-                        onClick={() => smoothScrollTo("#faq")}
+                        onClick={() => smoothScrollTo("#faqs")}
                         className="hover:text-blue-300 transition hover:drop-shadow-[0_0_6px_#60a5fa] text-left"
                     >
                         FAQ
                     </button>
                     {/* updated Contact Us */}
-                    <a
-                        href={CONTACT_FORM_URL}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="hover:text-pink-300 transition hover:drop-shadow-[0_0_6px_#f472b6]"
+                    <Link
+                        to="/contact-us"
+                        className="hover:text-green-400 transition hover:drop-shadow-[0_0_6px_#22c55e]"
                     >
                         Contact Us
-                    </a>
+                    </Link>
                 </div>
             </div>
 
@@ -152,7 +156,7 @@ const Footer = () => {
                 <div className="text-center md:text-left">
                     Architected with <span className="text-pink-400">❤️</span> by{" "}
                     <Link
-                        to="/team"
+                        to="/teams"
                         className="hover:text-green-400 hover:drop-shadow-[0_0_6px_#22c55e] transition"
                     >
                         TCP Team

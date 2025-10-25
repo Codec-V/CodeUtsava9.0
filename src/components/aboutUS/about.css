@@ -43,6 +43,7 @@
 }
 
 /* ===== 3D viewer card with same style as timeline cards ===== */
+
 .about-card {
     background-image: linear-gradient(to right,
             var(--color-primary),
@@ -52,6 +53,7 @@
     padding: 1px;
     /* outer border frame */
     box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+    height: 100%;
 }
 
 .about-card__inner {
@@ -61,7 +63,7 @@
     position: relative;
     overflow: hidden;
     /* Optional ring outline */
-    ring: 1px solid rgba(255, 255, 255, 0.10);
+    height: 100%;
 }
 
 /* Glow around the frame of the 3D card */
@@ -82,29 +84,30 @@
     backdrop-filter: blur(10px);
     border-radius: 1rem;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+    height: 100%;
 }
 
 /* ===== Highlight styles (color + bold only, no yellow) ===== */
 .hl-codeutsava {
-    color: #ff0099;
+    color: #ffae00;
     /* neon magenta */
     font-weight: 700;
 }
 
 .hl-33l {
-    color: #1e90ff;
+    color: #ffae00;
     /* electric blue */
     font-weight: 700;
 }
 
 .hl-amount {
-    color: #00ff85;
+    color: #ffae00;
     /* mint neon */
     font-weight: 700;
 }
 
 .hl-event {
-    color: #1e90ff;
+    color: #ffae00;
     /* reuse the blue accent */
     font-weight: 700;
 }
@@ -132,7 +135,7 @@
     width: 10px;
     height: 10px;
     border-radius: 9999px;
-    background: #1e90ff;
+    background: #ffcd18;
     /* blue bullet dot */
     outline: 1px solid rgba(255, 255, 255, 0.18);
     box-shadow: none;

@@ -1,23 +1,41 @@
 import React, { useEffect, useRef, useState } from "react";
-import Intro from "../../components/intro/Intro.jsx";
-import Hero from "../../components/hero/Hero.jsx";
-import Footer from "../../components/footer/Footer.jsx";
-import Fireworks from "../../components/overlays/Fireworks.jsx";
-import SparkleLayer from "../../components/overlays/SparkleLayer.jsx";
-import Lastyear from "../../components/LYparticipation/Lastyear.jsx";
-import AboutUS from "../../components/aboutUS/AboutUS.jsx";
-import Sponsors from "../../components/Sponsors/Spons.jsx";
-import Timeline from "../../components/timeline/Timeline.jsx";
-import GRandAN from "../../components/graphs&Analytics/GRandAN.jsx";
-import Guide from "../../components/guidelines/Guide.jsx";
-import FAQ from "../FAQ.jsx";
-import Cursor from "../../components/cursor/Cursor.jsx";
+import Intro from "../components/intro/Intro.jsx";
+import Hero from "../components/hero/Hero.jsx";
+import Footer from "../components/footer/Footer.jsx";
+import Fireworks from "../components/overlays/Fireworks.jsx";
+import SparkleLayer from "../components/overlays/SparkleLayer.jsx";
+import Lastyear from "../components/LYparticipation/Lastyear.jsx";
+import AboutUS from "../components/aboutUS/AboutUS.jsx";
+import Sponsors from "../components/Sponsors/Spons.jsx";
+import Timeline from "../components/timeline/Timeline.jsx";
+import GRandAN from "../components/graphs&Analytics/GRandAN.jsx";
+import Guide from "../components/guidelines/Guide.jsx";
+import FAQ from "./FAQ.jsx";
+import Cursor from "../components/cursor/Cursor.jsx";
+import BackgroundMedia from "../components/background/Background.jsx";
+import bg_image from "../assets/images/bg-part2.jpg";
+import PrizesSection from "../components/prizes/Prizes.jsx";
 
 export default function Home({ skipIntro = false }) {
     const [revealed, setRevealed] = useState(skipIntro);
+    const [curtainProgress, setCurtainProgress] = useState(0);
+    const [heroAnimationsStarted, setHeroAnimationsStarted] = useState(skipIntro);
     const MAX = 100;
     const progRef = useRef(0);
     const touchStartYRef = useRef(0);
+
+    // Handle curtain progress from Intro component
+    const handleCurtainProgress = (progress) => {
+        setCurtainProgress(progress);
+        // Start hero animations when curtain starts revealing
+        if (progress >= 0.9 && !heroAnimationsStarted) {
+            setHeroAnimationsStarted(true);
+            // Delay revealing content until curtain animation completes (1.5s + buffer)
+            setTimeout(() => {
+                setRevealed(true);
+            }, 100);
+        }
+    };
 
     useEffect(() => {
         if (revealed) return;
@@ -53,6 +71,13 @@ export default function Home({ skipIntro = false }) {
 
     return (
         <>
+            {/* Global fixed background for entire page */}
+            <BackgroundMedia
+                imageSrc={bg_image}
+                darken={0.5}
+                className="bg-right"
+            />
+
             {/* Overlays for the whole page; below text (z-20), above backdrops/halves */}
             <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 15 }}>
                 <SparkleLayer />
@@ -61,22 +86,27 @@ export default function Home({ skipIntro = false }) {
                 {/* <Fireworks autoLaunch/>   */}
             </div>
 
+            {/* Always render Hero for background visibility */}
+            <Hero animationsStarted={heroAnimationsStarted} />
+
+            {/* Always render Cursor for custom cursor effect */}
+            <Cursor />
+
             {!revealed ? (
-                <Intro />
+                <Intro onCurtainProgress={handleCurtainProgress} />
             ) : (
                 <>
-                   <Cursor/>
-                    <Hero />
                     <Lastyear />
                     <AboutUS />
                     <Sponsors />
                     <Timeline />
                     <Guide />
+                    <PrizesSection/>
                     <GRandAN />
-                    <FAQ/>
+                    <FAQ />
                     <Footer />
                 </>
             )}
-        </>
-    );
+        </>
+    );
 }
